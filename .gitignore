@@ -1,0 +1,78 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/contentModel.xml
+/projectSettingsUpdater.xml
+/.idea
+/modules.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+# Build Results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+*.dll
+*.exe
+*.pdb
+*.tmp
+*.log
+*.obj
+*.lib
+*.so
+*.a
+*.dylib
+*.o
+*.lo
+*.la
+*.pyc
+*.pyo
+*.rej
+*.bak
+*.orig
+*.sbr
+*.bsc
+*.res
+*.pch
+*.ncb
+*.opensdf
+*.sdf
+*.ipch
+
+# NuGet packages
+packages/
+*.nupkg
+*.snupkg
+*.props
+*.targets
+
+# SQLite database files
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Logs and other
+/UrlShortener.Api/logs
+/UrlShortener.sln.DotSettings.user
+
+# Local settings and configuration
+appsettings.Development.json
+appsettings.json.user
+secrets.json
+
+# Other common ignores
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z
+*.rar
+Thumbs.db
+.DS_Store
