@@ -46,12 +46,12 @@ public class UrlController : ControllerBase
         }
     }
     
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteShortUrl(string id)
+    [HttpDelete("{shortCode}")]
+    public async Task<IActionResult> DeleteShortUrl(string shortCode)
     {
         try
         {
-            var deleted = await _urlService.DeleteShortUrl(id);
+            var deleted = await _urlService.DeleteShortUrl(shortCode);
             if (!deleted)
             {
                 return NotFound("Short URL not found");
@@ -61,7 +61,7 @@ public class UrlController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error deleting short URL: {Id}", id);
+            _logger.LogError(ex, "Error deleting short URL: {ShortCode}", shortCode);
             return StatusCode(500, "Internal server error");
         }
     }
