@@ -11,8 +11,8 @@ A minimal, extensible URL shortening service built with .NET, Entity Framework C
 - SQLite database with Entity Framework Core migrations
 - Clean Architecture: Domain / Application / Infrastructure / API
 - Two implementations of code generation:
-	1. With db lookup. 
-	2. Base62 random generator (up to 62^L unique values where L = length of code).
+	1. Simple random generator with db lookup to guarantee unique values. 
+	2. Base62 random generator without db lookup (theoretically has lower probability of collisions).
 	Implementation can be selected in appsettings.{env}.json -> ShortCodeGeneration.Strategy (Database or Random).
 - Basic unit tests for UrlService
 
