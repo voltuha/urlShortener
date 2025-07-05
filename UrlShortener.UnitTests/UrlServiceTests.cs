@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Moq;
 using UrlShortener.Application.DTO.Requests;
+using UrlShortener.Application.Interfaces;
 using UrlShortener.Application.Services;
 using UrlShortener.Infrastructure.Persistence;
 
@@ -11,6 +12,7 @@ public class UrlServiceTests
 {
     private readonly UrlShortenerContext _context;
     private readonly Mock<ILogger<UrlService>> _loggerMock;
+    private readonly Mock<IShortCodeGenerator> _shortCodeGeneratorMock;
     private readonly UrlService _service;
 
     public UrlServiceTests()
@@ -21,7 +23,12 @@ public class UrlServiceTests
 
         _context = new UrlShortenerContext(options);
         _loggerMock = new Mock<ILogger<UrlService>>();
-        _service = new UrlService(_loggerMock.Object, _context);
+        _shortCodeGeneratorMock = new Mock<IShortCodeGenerator>();
+
+        _shortCodeGeneratorMock.Setup(g => g.GenerateShortCode())
+            .ReturnsAsync("generated123");
+
+        _service = new UrlService(_loggerMock.Object, _context, _shortCodeGeneratorMock.Object);
     }
 
     [Fact]

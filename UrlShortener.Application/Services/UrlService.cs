@@ -14,12 +14,13 @@ public class UrlService : IUrlService
 {
     private readonly ILogger<UrlService> _logger;
     private readonly UrlShortenerContext _context;
-    private static readonly char[] Characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".ToCharArray();
+    private readonly IShortCodeGenerator _shortCodeGenerator;
 
-    public UrlService(ILogger<UrlService> logger, UrlShortenerContext context)
+    public UrlService(ILogger<UrlService> logger, UrlShortenerContext context, IShortCodeGenerator shortCodeGenerator)
     {
         _logger = logger;
         _context = context;
+        _shortCodeGenerator = shortCodeGenerator;
     }
 
     public async Task<ShortUrlResponse> CreateShortUrl(ShortUrlRequest request)
@@ -88,31 +89,6 @@ public class UrlService : IUrlService
         return true;
     }
     
-    private async Task<string> GenerateUniqueIdAsync()
-    {
-        const int maxAttempts = 100;
-        var random = new Random();
-            
-        for (int attempt = 0; attempt < maxAttempts; attempt++)
-        {
-            var length = 6; 
-            var id = GenerateRandomId(random, length);
-                
-            if (!await _context.ShortUrls.AnyAsync(x => x.Code == id))
-            {
-                return id;
-            }
-                
-            if (attempt > 50)
-            {
-                length = 8;
-            }
-        }
-            
-        // Fallback to GUID if we can't generate a unique short id
-        return Guid.NewGuid().ToString("N")[..8];
-    }
-    
     private void ValidateUrl(ShortUrlRequest request)
     {
         if (!Uri.TryCreate(request.OriginalUrl, UriKind.Absolute, out _))
@@ -142,19 +118,9 @@ public class UrlService : IUrlService
         }
         else
         {
-            shortCode = await GenerateUniqueIdAsync();
+            shortCode = await _shortCodeGenerator.GenerateShortCode();
         }
 
         return shortCode;
-    }
-    
-    private static string GenerateRandomId(Random random, int length)
-    {
-        var result = new StringBuilder(length);
-        for (int i = 0; i < length; i++)
-        {
-            result.Append(Characters[random.Next(Characters.Length)]);
-        }
-        return result.ToString();
     }
 }
