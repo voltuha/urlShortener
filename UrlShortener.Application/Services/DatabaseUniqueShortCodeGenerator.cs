@@ -25,10 +25,10 @@ public class DatabaseUniqueShortCodeGenerator : IShortCodeGenerator
     {
         const int maxAttempts = 100;
         var random = new Random();
-            
+        var length = _length; 
+
         for (int attempt = 0; attempt < maxAttempts; attempt++)
         {
-            var length = 6; 
             var id = GenerateRandomId(random, length);
                 
             if (!await _context.ShortUrls.AnyAsync(x => x.Code == id))
@@ -38,7 +38,7 @@ public class DatabaseUniqueShortCodeGenerator : IShortCodeGenerator
                 
             if (attempt > 50)
             {
-                length = 8;
+                length = _length + 2;
             }
         }
             
