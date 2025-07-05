@@ -18,3 +18,6 @@ A minimal, extensible URL shortening service built with .NET, Entity Framework C
 
 ## Requires
 - Dotnet 9
+
+## Test deployment
+App is deployed and ready-to-test at https://urlshortener-production-d8e5.up.railway.app/swagger/index.html
